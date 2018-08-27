@@ -1,5 +1,12 @@
 import { GraphQLServer } from "graphql-yoga";
 import resolvers from "./graphql/resolvers";
+import { pushPeople } from "./graphql/db"
+import mongoose from "mongoose";
+
+mongoose.connect("mongodb://127.0.0.1:27017/graphqlDB", { useNewUrlParser: true })
+  .then(() => {
+    console.log("mongo connect");
+  });
 
 const options = {
   port: 7777,

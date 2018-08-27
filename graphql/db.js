@@ -1,36 +1,18 @@
-let people = [
-  {
-    id: 0,
-    name: "donghoon",
-    age: 20,
-    gender: "male"
-  },
-  {
-    id: 1,
-    name: "gyuhwan",
-    age: 20,
-    gender: "male"
-  },
-  {
-    id: 2,
-    name: "jungho",
-    age: 20,
-    gender: "male"
-  },
-  {
-    id: 3,
-    name: "myunggyu",
-    age: 20,
-    gender: "male"
-  }
-];
+import mongoose from "mongoose";
 
-export const getPeople = () => people;
+const Person = mongoose.model("person",
+  { id: Number,
+    name: String,
+    age: Number,
+    gender: String
+  });
 
-export const getById = (id) => {
-  const filteredPeople = people.filter(person => person.id === id);
+export const getPeople = async () => {
+  return await Person.find()
+};
 
-  return filteredPeople[0]
+export const getById = async (args) => {
+  return await Person.findOne({id: args.id})
 };
 
 export const deletePerson = (id) => {
@@ -45,13 +27,11 @@ export const deletePerson = (id) => {
   }
 };
 
-export const addPerson = (name, age, gender) => {
-  const newPerson = {
+export const addPerson = async (name, age, gender) => {
+  return await new Person({
     id: people.length,
     name,
     age,
     gender
-  };
-  people.push(newPerson);
-  return newPerson;
+  }).save()
 }
