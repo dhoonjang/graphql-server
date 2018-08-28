@@ -11,27 +11,17 @@ export const getPeople = async () => {
   return await Person.find()
 };
 
-export const getById = async (args) => {
-  return await Person.findOne({id: args.id})
-};
-
-export const deletePerson = (id) => {
-  const cleanedPeople = people.filter(person => person.id !== id);
-
-  if(people.length > cleanedPeople.length) {
-    people = cleanedPeople;
-
-    return true;
-  } else {
-    return false;
-  }
+export const getById = async (id) => {
+  return await Person.findOne({ id })
 };
 
 export const addPerson = async (name, age, gender) => {
+  let people = await Person.find();
+
   return await new Person({
     id: people.length,
     name,
     age,
     gender
   }).save()
-}
+};
